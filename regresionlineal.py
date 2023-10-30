@@ -57,13 +57,14 @@ for finger in fingers:
     arcotangente = np.arctan(pendiente_en_el_lado_derecho)
 
     # Print the slope and plot the data points and regression line using Matplotlib
-    print("Pendiente:", pendiente_en_el_lado_derecho)
+    print(finger)
+    print("\tPendiente:", pendiente_en_el_lado_derecho)
     # give me the angle in degrees minutes and seconds
     angulo_grados = np.degrees(arcotangente)
     angulo_minutos = (angulo_grados % 1) * 60
     angulo_segundos = (angulo_minutos % 1) * 60
-    print("Angulo:", angulo_grados, angulo_minutos, angulo_segundos)
-
+    print("\tAngulo:", angulo_grados, angulo_minutos, angulo_segundos)
+    print()
     # plt.figure()
     # plt.plot(x, y, 'o')
     # plt.plot(x_line, y_line)
