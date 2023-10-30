@@ -6,7 +6,6 @@ from sklearn.linear_model import LinearRegression
 # get the json filename from the command line
 import sys
 filename = sys.argv[1]
-print("Filename:", filename)
 
 # read the json file
 import json
@@ -28,28 +27,45 @@ for finger in fingers:
 
 print(lists_dict)
 
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Linear Regression with Square Array')
 
 for finger in fingers:
+    # Extract x and y coordinates from the dictionary using the current finger as the key
     x = np.array(lists_dict[finger][0])
     y = np.array(lists_dict[finger][1])
-    
+
+    # If either the x or y list is empty, skip to the next finger
     if x.size == 0 or y.size == 0:
         continue
+
+    # Reshape the x-coordinates into a 2D array and create a LinearRegression model
     X = x.reshape(-1, 1)
     model = LinearRegression()
     model.fit(X, y)
 
+    # Create a line of x-coordinates and generate corresponding y-coordinates using the linear regression model
     x_line = np.linspace(min(x), max(x), 100)
     X_line = x_line.reshape(-1, 1)
     y_line = model.predict(X_line)
 
+    # Calculate the slope of the line on the right side of the plot using the coef_ attribute of the model
     pendiente_en_el_lado_derecho = model.coef_[0]
 
+    # Calculate the angle of the slope in radians using the arctan function from NumPy
     arcotangente = np.arctan(pendiente_en_el_lado_derecho)
 
+    # Print the slope and plot the data points and regression line using Matplotlib
     print("Pendiente:", pendiente_en_el_lado_derecho)
-    plt.xlabel('X')
-    plt.ylabel('Y')
-    plt.title('Linear Regression with Square Array')
-    plt.show()
+    # give me the angle in degrees minutes and seconds
+    angulo_grados = np.degrees(arcotangente)
+    angulo_minutos = (angulo_grados % 1) * 60
+    angulo_segundos = (angulo_minutos % 1) * 60
+    print("Angulo:", angulo_grados, angulo_minutos, angulo_segundos)
+
+    # plt.figure()
+    # plt.plot(x, y, 'o')
+    # plt.plot(x_line, y_line)
+    # plt.show()
 
